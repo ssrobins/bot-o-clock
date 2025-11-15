@@ -33,39 +33,21 @@
 
 ## Installation
 
-### 1. Install system dependencies
+### Automated Setup (Recommended)
 
 ```bash
-# macOS
-brew install portaudio ffmpeg
-
-# Optional: BlackHole for virtual audio routing
-brew install blackhole-2ch
+python setup.py
 ```
 
-### 2. Install Python dependencies
+The setup script will guide you through:
+- Installing system dependencies (portaudio, ffmpeg)
+- Installing Python packages
+- Installing and configuring Ollama
+- Pulling LLM models
 
-```bash
-pip install -r requirements.txt
-```
+### Manual Installation
 
-### 3. Install Ollama
-
-```bash
-# macOS
-brew install ollama
-
-# Start Ollama service
-ollama serve
-```
-
-### 4. Pull LLM models
-
-```bash
-# Recommended models
-ollama pull llama3.1:8b
-ollama pull llama3.1:70b  # If you have the resources
-```
+See [SETUP.md](SETUP.md) for detailed manual installation steps.
 
 ## Quick Start
 

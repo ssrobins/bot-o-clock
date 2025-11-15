@@ -2,6 +2,16 @@
 
 ## Fast Setup (5 minutes)
 
+### Automated Setup (Recommended)
+```bash
+cd bot-oclock
+python setup.py
+```
+
+The setup script will handle everything automatically. Or, for manual setup:
+
+### Manual Setup
+
 ### 1. Install Ollama & Pull Model
 ```bash
 # Install and start Ollama

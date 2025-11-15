@@ -163,7 +163,12 @@ Use: Deep conversations and reflection
 
 ## 🚀 Quick Start
 
-### Installation (3 commands)
+### Automated Setup (Recommended)
+```bash
+python setup.py  # Guides you through full setup
+```
+
+### Manual Installation (3 commands)
 ```bash
 # 1. Install Ollama and model
 brew install ollama && ollama serve & ollama pull llama3.1:8b
@@ -175,7 +180,7 @@ pip install -r requirements.txt
 python src/main.py run --mode text
 ```
 
-### Or Use The Helper Script
+### Check Your Setup
 ```bash
 python start.py  # Shows status and next steps
 ```

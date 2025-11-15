@@ -1,5 +1,19 @@
 # bot-o'clock Setup Guide
 
+## Quick Setup
+
+**Recommended:** Use the automated setup script:
+
+```bash
+python setup.py
+```
+
+This will guide you through all installation steps automatically.
+
+## Manual Setup
+
+For manual installation or troubleshooting, follow the detailed steps below.
+
 ## Prerequisites
 
 1. **Python 3.10+**
