@@ -38,18 +38,20 @@ def run_command(cmd, check=True, shell=False):
 
 
 def check_python_version():
-    """Check if Python version is 3.10+"""
+    """Check if Python version is 3.10-3.12"""
     print_step(1, "Checking Python Version")
     version = sys.version_info
     version_str = f"{version.major}.{version.minor}.{version.micro}"
     
-    if version.major >= 3 and version.minor >= 10:
+    if version.major == 3 and 10 <= version.minor <= 12:
         print(f"✓ Python {version_str} - OK")
         return True
     else:
-        print(f"✗ Python {version_str} - Need Python 3.10+")
-        print("\nPlease upgrade Python:")
-        print("  brew install python@3.11")
+        print(f"✗ Python {version_str} - Incompatible")
+        print("\nPython 3.10-3.12 is required (3.13+ not yet supported by TTS library)")
+        print("\nTo install Python 3.12:")
+        print("  brew install python@3.12")
+        print("  # Then run setup with: python3.12 setup.py")
         return False
 
 
