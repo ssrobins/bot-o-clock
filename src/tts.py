@@ -39,15 +39,6 @@ class CoquiTTS:
         """Load the TTS model"""
         try:
             from TTS.api import TTS
-            import torch
-            
-            # Fix for PyTorch 2.6+ weights_only default change
-            # Allow TTS classes to be loaded safely
-            try:
-                from TTS.tts.configs.xtts_config import XttsConfig
-                torch.serialization.add_safe_globals([XttsConfig])
-            except Exception:
-                pass  # Older PyTorch or TTS versions don't need this
             
             logger.info(f"Loading TTS model: {self.config.model_name}")
             
