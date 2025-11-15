@@ -12,7 +12,7 @@
 - 🧠 **Memory System** - Persistent memory for each agent
 - 🔒 **100% Local** - All processing runs offline (STT, LLM, TTS)
 - 🎭 **Persona Management** - Customizable agent personalities and behaviors
-- 🔊 **Virtual Audio** - Support for BlackHole, Loopback, and other audio routing
+- 🔊 **Virtual Audio** - Optional support for BlackHole/Loopback to capture audio from other applications
 
 ## Documentation
 

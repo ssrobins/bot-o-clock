@@ -49,9 +49,17 @@ For Linux/Windows or manual installation on macOS, follow the detailed steps bel
 ```bash
 # Audio libraries
 brew install portaudio ffmpeg
+```
 
-# Optional: BlackHole for virtual audio routing
+**Note about BlackHole:** The setup script does NOT install BlackHole by default because:
+- It requires a system reboot to work
+- Most users don't need it (regular microphone works fine)
+- It's only needed for advanced use cases (capturing audio from other apps)
+
+If you need BlackHole later:
+```bash
 brew install blackhole-2ch
+# Then reboot your Mac
 ```
 
 **Linux (Ubuntu/Debian):**

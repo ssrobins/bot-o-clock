@@ -143,15 +143,17 @@ def install_system_dependencies():
             print(f"✗ Failed to install {package}")
             all_success = False
 
-    # Optional: BlackHole
-    print("\nOptional: BlackHole for virtual audio routing")
-    response = input("Install BlackHole? (y/n): ").lower().strip()
-    if response == 'y':
-        success, _ = run_command(["brew", "install", "blackhole-2ch"])
-        if success:
-            print("✓ BlackHole installed")
-        else:
-            print("⚠ BlackHole installation failed (optional)")
+    # Skip BlackHole - requires reboot and most users don't need it
+    print("\n" + "=" * 60)
+    print("Note: BlackHole (optional virtual audio driver) NOT installed")
+    print("=" * 60)
+    print("BlackHole is for advanced audio routing between applications.")
+    print("It requires a system reboot and most users don't need it.")
+    print("")
+    print("If you want to install it later:")
+    print("  brew install blackhole-2ch")
+    print("  (then reboot your system)")
+    print("=" * 60)
 
     return all_success
 
