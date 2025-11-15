@@ -14,6 +14,7 @@ bot-oclock/
 ├── 📄 requirements.txt             # Python dependencies
 ├── 📄 .gitignore                   # Git ignore patterns
 │
+├── 🐍 start.py                     # Quick start helper script
 ├── 🐍 test_installation.py         # Installation verification script
 ├── 🐍 examples.py                  # Usage examples
 │
@@ -57,8 +58,9 @@ bot-oclock/
 5. **PROJECT_SUMMARY.md** - Complete feature list and status
 
 ### Code
-6. **examples.py** - Programmatic usage examples
-7. **test_installation.py** - Verify your installation
+6. **start.py** - Quick start helper to check setup and show next steps
+7. **examples.py** - Programmatic usage examples
+8. **test_installation.py** - Verify your installation
 
 ## 🗂️ Source Code Index
 

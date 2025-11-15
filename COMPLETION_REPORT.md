@@ -177,7 +177,7 @@ python src/main.py run --mode text
 
 ### Or Use The Helper Script
 ```bash
-./start.sh  # Shows status and next steps
+python start.py  # Shows status and next steps
 ```
 
 ---

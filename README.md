@@ -70,6 +70,9 @@ ollama pull llama3.1:70b  # If you have the resources
 ## Quick Start
 
 ```bash
+# Check your setup
+python start.py
+
 # Start bot-o'clock
 python src/main.py
 

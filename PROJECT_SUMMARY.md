@@ -33,6 +33,7 @@ bot-oclock/
 ├── data/                   # Runtime data (databases, logs)
 │
 ├── requirements.txt        # Python dependencies
+├── start.py               # Quick start helper script
 ├── README.md              # Main documentation
 ├── SETUP.md               # Detailed setup guide
 ├── QUICKSTART.md          # Quick start guide

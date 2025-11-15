@@ -80,7 +80,7 @@ While running, say:
 
 ## Tips
 
-1. **First time?** Start with text mode to understand the system
+1. **First time?** Run `python start.py` to check your setup, or start with text mode to understand the system
 2. **Want multiple agents?** Load multiple personas:
    ```bash
    python src/main.py run \
