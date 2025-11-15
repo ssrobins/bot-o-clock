@@ -14,6 +14,15 @@
 - 🎭 **Persona Management** - Customizable agent personalities and behaviors
 - 🔊 **Virtual Audio** - Support for BlackHole, Loopback, and other audio routing
 
+## Documentation
+
+- 📖 [Quick Start Guide](QUICKSTART.md) - Get up and running in 5 minutes
+- 🔧 [Setup Guide](SETUP.md) - Detailed installation and configuration instructions
+- 🏗️ [Architecture](ARCHITECTURE.md) - System design, flow diagrams, and technical details
+- 📋 [Project Summary](PROJECT_SUMMARY.md) - Complete overview of what has been built
+- 📑 [Project Index](INDEX.md) - Complete file structure and navigation guide
+- ✅ [Completion Report](COMPLETION_REPORT.md) - Project status and accomplishments
+
 ## Requirements
 
 - Python 3.10+
