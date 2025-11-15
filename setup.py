@@ -348,8 +348,28 @@ def show_next_steps(venv_path):
     print("\n" + "=" * 60)
 
 
+def clean_venv():
+    """Clean up virtual environment"""
+    print_header("🧹 Clean Virtual Environment")
+
+    if os.path.exists("venv"):
+        print("Removing virtual environment...")
+        shutil.rmtree("venv")
+        print("✓ Virtual environment removed")
+    else:
+        print("No virtual environment found")
+
+    print("\nTo set up again, run:")
+    print("  python3 setup.py")
+
+
 def main():
     """Main setup routine"""
+    # Check for clean argument
+    if len(sys.argv) > 1 and sys.argv[1] == "clean":
+        clean_venv()
+        return
+
     print_header("🕒 bot-o'clock Setup")
 
     # Check if running on macOS
