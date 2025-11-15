@@ -240,11 +240,14 @@ def start_ollama():
                            stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL)
             import time
-            time.sleep(2)  # Give it time to start
-
-            if check_ollama_running():
-                print("✓ Ollama started")
-                return True
+            print("Waiting for Ollama to start...")
+            
+            # Wait up to 10 seconds for Ollama to start
+            for i in range(10):
+                time.sleep(1)
+                if check_ollama_running():
+                    print("✓ Ollama started")
+                    return True
     except Exception:
         pass
 
@@ -261,30 +264,38 @@ def pull_ollama_models():
         print("⚠ Ollama is not running. Start it with: ollama serve")
         return False
 
-    print("\nRecommended model: llama3.1:8b")
-    response = input("Pull llama3.1:8b? (y/n): ").lower().strip()
+    print("\n" + "=" * 60)
+    print("LLM Model Required")
+    print("=" * 60)
+    print("bot-o'clock requires a language model to function.")
+    print("Models power the AI agents' reasoning and responses.")
+    print("")
+    print("llama3.1:8b:")
+    print("  - Size: ~4.7 GB")
+    print("  - Good balance of speed and quality")
+    print("  - Works well on most modern Macs")
+    print("")
+    print("You can install additional models later with:")
+    print("  ollama pull <model-name>")
+    print("  ollama list  (to see installed models)")
+    print("=" * 60)
+
+    print("\nPull llama3.1:8b (required)?")
+    response = input("(y/n): ").lower().strip()
 
     if response == 'y':
         print("\nPulling llama3.1:8b (this may take several minutes)...")
         success, _ = run_command(["ollama", "pull", "llama3.1:8b"])
         if success:
             print("✓ Model pulled successfully")
+            return True
         else:
             print("✗ Failed to pull model")
             return False
-
-    print("\nOptional: llama3.1:70b (requires significant resources)")
-    response = input("Pull llama3.1:70b? (y/n): ").lower().strip()
-
-    if response == 'y':
-        print("\nPulling llama3.1:70b (this will take a while)...")
-        success, _ = run_command(["ollama", "pull", "llama3.1:70b"])
-        if success:
-            print("✓ Model pulled successfully")
-        else:
-            print("⚠ Failed to pull model (optional)")
-
-    return True
+    else:
+        print("\n⚠ Skipping model pull. You'll need to pull a model manually later:")
+        print("  ollama pull llama3.1:8b")
+        return False
 
 
 def run_tests(venv_path):
