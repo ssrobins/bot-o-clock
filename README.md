@@ -25,7 +25,7 @@
 
 ## Requirements
 
-- Python 3.10-3.12 (3.13+ not yet supported by TTS library)
+- Python 3.10 only (TTS library requires <3.11, not compatible with 3.11+)
 - **macOS** (primary support - setup script provided)
 - Linux/Windows (possible but requires manual setup - see [SETUP.md](SETUP.md))
 - Ollama (for LLM inference)

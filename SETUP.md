@@ -22,15 +22,15 @@ For Linux/Windows or manual installation on macOS, follow the detailed steps bel
 
 ## Prerequisites
 
-1. **Python 3.10-3.12**
+1. **Python 3.10 only**
    ```bash
-   python --version  # Should be 3.10, 3.11, or 3.12 (not 3.13+)
+   python --version  # Must be 3.10.x
    ```
-   
-   **Note:** Python 3.13+ is not yet supported due to TTS library compatibility.
-   If you have Python 3.13, install Python 3.12:
+
+   **Note:** Python 3.11+ is NOT supported due to TTS library requiring Python <3.11.
+   If you have Python 3.11 or newer, install Python 3.10:
    ```bash
-   brew install python@3.12
+   brew install python@3.10
    ```
 
 2. **Package Manager**

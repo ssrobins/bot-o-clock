@@ -39,13 +39,11 @@ def run_command(cmd, check=True, shell=False, cwd=None):
 
 
 def find_compatible_python():
-    """Find a compatible Python version (3.10-3.12)"""
+    """Find a compatible Python version (3.10 only)"""
     print_step(1, "Finding Compatible Python Version")
 
-    # Try different Python versions
+    # Try different Python commands for 3.10
     python_commands = [
-        "python3.12",
-        "python3.11",
         "python3.10",
         "python3",
         "python"
@@ -64,16 +62,16 @@ def find_compatible_python():
                 version = result.stdout.strip()
                 major, minor = map(int, version.split('.'))
 
-                if major == 3 and 10 <= minor <= 12:
+                if major == 3 and minor == 10:
                     print(f"✓ Found compatible Python: {cmd} (version {version})")
                     return cmd, version
             except Exception:
                 continue
 
     print("✗ No compatible Python version found")
-    print("\nPython 3.10-3.12 is required (3.13+ not yet supported by TTS library)")
-    print("\nTo install Python 3.12:")
-    print("  brew install python@3.12")
+    print("\nPython 3.10 is required (TTS library requires <3.11)")
+    print("\nTo install Python 3.10:")
+    print("  brew install python@3.10")
     return None, None
 
 
@@ -374,7 +372,7 @@ def main():
 
     print("This script will guide you through setting up bot-o'clock.\n")
     print("Steps:")
-    print("  1. Find compatible Python (3.10-3.12)")
+    print("  1. Find compatible Python (3.10 only)")
     print("  2. Check Homebrew (macOS)")
     print("  3. Create virtual environment")
     print("  4. Install system dependencies")
