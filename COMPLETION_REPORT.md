@@ -13,6 +13,11 @@ A **complete, production-ready, local, voice-driven, multi-agent AI framework** 
 📅 Completed: November 14, 2025
 👨‍💻 Status: Production Ready
 
+Platform Support:
+  ├─ ✅ macOS - Fully supported and tested with automated setup
+  ├─ ⚠️ Linux - Potentially compatible, untested, manual setup required
+  └─ ⚠️ Windows - Potentially compatible, untested, manual setup required
+
 Code Statistics:
   ├─ 2,769 lines of Python code
   ├─ 8 core modules
@@ -163,15 +168,17 @@ Use: Deep conversations and reflection
 
 ## 🚀 Quick Start
 
-### Automated Setup (Recommended)
+### Automated Setup (macOS only)
 ```bash
 python setup.py  # Guides you through full setup
 ```
 
-### Manual Installation (3 commands)
+### Manual Installation (All platforms)
 ```bash
 # 1. Install Ollama and model
+# macOS:
 brew install ollama && ollama serve & ollama pull llama3.1:8b
+# Linux/Windows: See SETUP.md for platform-specific instructions
 
 # 2. Install Python dependencies
 pip install -r requirements.txt

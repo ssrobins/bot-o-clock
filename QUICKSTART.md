@@ -2,13 +2,15 @@
 
 ## Fast Setup (5 minutes)
 
-### Automated Setup (Recommended)
+### Automated Setup (macOS only)
 ```bash
 cd bot-oclock
 python setup.py
 ```
 
-The setup script will handle everything automatically. Or, for manual setup:
+The setup script will handle everything automatically.
+
+**Linux/Windows users:** See manual setup below or check [SETUP.md](SETUP.md) for detailed platform-specific instructions.
 
 ### Manual Setup
 

@@ -1,8 +1,14 @@
 # bot-o'clock Setup Guide
 
-## Quick Setup
+## Platform Support
 
-**Recommended:** Use the automated setup script:
+- ✅ **macOS**: Fully supported and tested with automated setup script
+- ⚠️ **Linux**: Potentially compatible but untested - manual installation required
+- ⚠️ **Windows**: Potentially compatible but untested - manual installation required
+
+## Quick Setup (macOS only)
+
+**Recommended for macOS users:** Use the automated setup script:
 
 ```bash
 python setup.py
@@ -12,7 +18,7 @@ This will guide you through all installation steps automatically.
 
 ## Manual Setup
 
-For manual installation or troubleshooting, follow the detailed steps below.
+For Linux/Windows or manual installation on macOS, follow the detailed steps below.
 
 ## Prerequisites
 
@@ -21,15 +27,19 @@ For manual installation or troubleshooting, follow the detailed steps below.
    python --version  # Should be 3.10 or higher
    ```
 
-2. **Homebrew** (macOS)
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
+2. **Package Manager**
+   - **macOS**: Homebrew
+     ```bash
+     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     ```
+   - **Linux**: apt, yum, or your distribution's package manager
+   - **Windows**: See individual tool documentation
 
 ## Installation Steps
 
 ### 1. Install System Dependencies
 
+**macOS:**
 ```bash
 # Audio libraries
 brew install portaudio ffmpeg
@@ -38,12 +48,42 @@ brew install portaudio ffmpeg
 brew install blackhole-2ch
 ```
 
+**Linux (Ubuntu/Debian):**
+```bash
+# Audio libraries
+sudo apt-get update
+sudo apt-get install portaudio19-dev ffmpeg
+
+# For CUDA support (optional)
+# Follow NVIDIA CUDA installation guide
+```
+
+**Linux (Fedora/RHEL):**
+```bash
+# Audio libraries
+sudo dnf install portaudio-devel ffmpeg
+```
+
+**Windows:**
+```powershell
+# Install via package manager or download binaries:
+# - PortAudio: http://www.portaudio.com/
+# - FFmpeg: https://ffmpeg.org/download.html
+# Or use chocolatey:
+choco install ffmpeg
+```
+
 ### 2. Create Python Virtual Environment
 
 ```bash
 cd bot-oclock
 python -m venv venv
-source venv/bin/activate  # On macOS/Linux
+
+# Activate the virtual environment:
+# macOS/Linux:
+source venv/bin/activate
+# Windows:
+# venv\Scripts\activate
 ```
 
 ### 3. Install Python Dependencies
@@ -59,6 +99,7 @@ pip install -r requirements.txt
 
 ### 4. Install and Setup Ollama
 
+**macOS:**
 ```bash
 # Install Ollama
 brew install ollama
@@ -66,6 +107,22 @@ brew install ollama
 # Start Ollama service (in a separate terminal)
 ollama serve
 ```
+
+**Linux:**
+```bash
+# Download and install
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Start Ollama service
+ollama serve
+```
+
+**Windows:**
+- Download installer from https://ollama.com/download
+- Run the installer
+- Ollama will start automatically as a service
+
+**Pull Models (all platforms):**
 
 In another terminal, pull models:
 

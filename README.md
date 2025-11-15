@@ -26,14 +26,15 @@
 ## Requirements
 
 - Python 3.10+
-- macOS (tested) / Linux / Windows
+- **macOS** (primary support - setup script provided)
+- Linux/Windows (possible but requires manual setup - see [SETUP.md](SETUP.md))
 - Ollama (for LLM inference)
 - 8GB+ RAM recommended
 - 16GB+ for larger models
 
 ## Installation
 
-### Automated Setup (Recommended)
+### Automated Setup (Recommended for macOS)
 
 ```bash
 python setup.py
@@ -45,9 +46,11 @@ The setup script will guide you through:
 - Installing and configuring Ollama
 - Pulling LLM models
 
+**Note:** The automated setup script is designed for macOS with Homebrew. Linux/Windows users should follow the manual installation steps in [SETUP.md](SETUP.md).
+
 ### Manual Installation
 
-See [SETUP.md](SETUP.md) for detailed manual installation steps.
+See [SETUP.md](SETUP.md) for detailed manual installation steps for all platforms.
 
 ## Quick Start
 
