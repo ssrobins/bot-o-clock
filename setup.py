@@ -99,16 +99,10 @@ def create_virtual_environment(python_cmd):
 
     venv_path = "venv"
 
-    # Check if venv already exists
+    # Check if venv already exists (shouldn't happen if cleanup was done, but just in case)
     if os.path.exists(venv_path):
-        print(f"⚠ Virtual environment already exists at '{venv_path}'")
-        response = input("Recreate it? (y/n): ").lower().strip()
-        if response == 'y':
-            print("Removing existing virtual environment...")
-            shutil.rmtree(venv_path)
-        else:
-            print("Using existing virtual environment")
-            return True, venv_path
+        print(f"Using existing virtual environment at '{venv_path}'")
+        return True, venv_path
 
     print(f"Creating virtual environment with {python_cmd}...")
     success, output = run_command([python_cmd, "-m", "venv", venv_path])
@@ -371,6 +365,17 @@ def main():
         print("  - Installing Ollama")
         print("  - Installing Python packages")
         sys.exit(0)
+
+    # Check for existing venv and offer to clean up
+    if os.path.exists("venv"):
+        print("⚠️  Found existing virtual environment")
+        response = input("Remove it and start fresh? (y/N): ").lower().strip()
+        if response == 'y':
+            print("Removing existing virtual environment...")
+            shutil.rmtree("venv")
+            print("✓ Cleaned up\n")
+        else:
+            print("Keeping existing venv (setup will try to use it)\n")
 
     print("This script will guide you through setting up bot-o'clock.\n")
     print("Steps:")
