@@ -1,0 +1,50 @@
+# bot-o'clock Global Configuration
+
+# Audio Settings
+audio:
+  input_device: null  # null = default, or device index/name
+  output_device: null
+  sample_rate: 16000
+  channels: 1
+  chunk_size: 1024
+  vad_enabled: true
+  vad_threshold: 0.5
+
+# Speech-to-Text (Whisper)
+stt:
+  model: "base"  # tiny, base, small, medium, large
+  language: "en"
+  device: "cpu"  # cpu, cuda
+  compute_type: "int8"  # int8, float16, float32
+
+# LLM (Ollama)
+llm:
+  host: "http://localhost:11434"
+  default_model: "llama3.1:8b"
+  timeout: 120
+  context_window: 4096
+
+# Text-to-Speech (Coqui)
+tts:
+  model: "tts_models/multilingual/multi-dataset/xtts_v2"
+  language: "en"
+  device: "cpu"
+  speed: 1.0
+
+# Memory
+memory:
+  db_path: "data/memories.db"
+  max_context_messages: 20
+  use_chromadb: false
+  chromadb_path: "data/chroma"
+
+# Orchestrator
+orchestrator:
+  max_agents: 10
+  default_persona: "personas/default_steve.yaml"
+  inter_agent_enabled: true
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "data/bot-oclock.log"

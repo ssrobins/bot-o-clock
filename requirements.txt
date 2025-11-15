@@ -1,0 +1,32 @@
+# Core dependencies
+python-dateutil>=2.8.2
+requests>=2.31.0
+numpy>=1.24.0
+pyyaml>=6.0
+
+# Audio processing
+sounddevice>=0.4.6
+soundfile>=0.12.1
+pyaudio>=0.2.13
+
+# Speech-to-Text
+faster-whisper>=0.10.0
+openai-whisper>=20231117
+
+# LLM Runtime
+ollama>=0.1.0
+
+# Text-to-Speech
+TTS>=0.21.0
+
+# Memory/Storage
+chromadb>=0.4.0
+
+# Async support
+aiofiles>=23.0.0
+asyncio>=3.4.3
+
+# Utilities
+python-dotenv>=1.0.0
+rich>=13.0.0
+click>=8.1.0
