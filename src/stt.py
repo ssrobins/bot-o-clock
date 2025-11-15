@@ -147,18 +147,21 @@ class StreamingTranscriber:
         stt: WhisperSTT,
         buffer_duration: float = 3.0,
         sample_rate: int = 16000,
-        callback: Optional[callable] = None
+        callback: Optional[callable] = None,
+        silence_duration: float = 1.5
     ):
         self.stt = stt
         self.buffer_duration = buffer_duration
         self.sample_rate = sample_rate
         self.callback = callback
+        self.silence_duration = silence_duration
         
         self.buffer = []
         self.max_buffer_size = int(buffer_duration * sample_rate)
         self.is_running = False
         self.thread = None
         self.audio_queue = queue.Queue()
+        self.last_audio_time = 0
         
     def add_audio(self, audio_chunk: np.ndarray):
         """Add audio chunk to the streaming buffer"""
@@ -167,10 +170,13 @@ class StreamingTranscriber:
     
     def _process_loop(self):
         """Background processing loop"""
+        import time
+        
         while self.is_running:
             try:
                 chunk = self.audio_queue.get(timeout=0.1)
                 self.buffer.append(chunk)
+                self.last_audio_time = time.time()
                 
                 # Check if buffer is full
                 total_samples = sum(len(c) for c in self.buffer)
@@ -178,9 +184,12 @@ class StreamingTranscriber:
                     self._transcribe_buffer()
                     
             except queue.Empty:
-                # Transcribe if buffer has data and queue is empty
-                if self.buffer:
-                    self._transcribe_buffer()
+                # Only transcribe if buffer has data AND we've had silence for the threshold duration
+                if self.buffer and self.last_audio_time > 0:
+                    silence_time = time.time() - self.last_audio_time
+                    if silence_time >= self.silence_duration:
+                        self._transcribe_buffer()
+                        self.last_audio_time = 0
             except Exception as e:
                 logger.error(f"Error in streaming transcriber: {e}")
     

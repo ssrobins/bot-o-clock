@@ -159,11 +159,15 @@ class BotOClock:
         self.audio_output = AudioOutput(device=audio_config_data.get('output_device'))
         
         # Streaming transcriber
+        stt_config_data = self.config.get('stt', {})
+        silence_duration = stt_config_data.get('silence_duration', 1.5)
+        
         self.streaming_transcriber = StreamingTranscriber(
             stt=stt,
             buffer_duration=3.0,
             sample_rate=audio_config.sample_rate,
-            callback=self._on_transcription
+            callback=self._on_transcription,
+            silence_duration=silence_duration
         )
         
         console.print("\n[green]✓ All components initialized successfully![/green]\n")

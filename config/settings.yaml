@@ -16,6 +16,7 @@ stt:
   language: "en"
   device: "cpu"  # cpu, cuda
   compute_type: "int8"  # int8, float16, float32
+  silence_duration: 1.5  # Seconds of silence before transcribing (voice mode)
 
 # LLM (Ollama)
 llm:
