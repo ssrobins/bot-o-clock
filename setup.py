@@ -317,16 +317,35 @@ def run_tests(venv_path):
     else:
         python_path = os.path.join(venv_path, "bin", "python")
 
-    print("\nRunning tests...")
-    success, output = run_command([python_path, "test_installation.py"])
-
-    if success:
-        print("✓ Tests passed")
-        print(output)
-        return True
-    else:
-        print("⚠ Some tests failed")
-        print(output)
+    print("\nRunning tests...\n")
+    
+    # Run tests and capture output
+    try:
+        result = subprocess.run(
+            [python_path, "test_installation.py"],
+            capture_output=True,
+            text=True
+        )
+        
+        # Print both stdout and stderr
+        if result.stdout:
+            print(result.stdout)
+        if result.stderr:
+            print(result.stderr)
+        
+        if result.returncode == 0:
+            print("\n✓ All tests passed")
+            return True
+        else:
+            print("\n✗ Some tests failed")
+            print("\nTo fix issues:")
+            print("  1. Check the test output above for specific failures")
+            print("  2. See SETUP.md for troubleshooting")
+            print("  3. Ensure Ollama is running: ollama serve")
+            print("  4. Ensure model is pulled: ollama pull llama3.1:8b")
+            return False
+    except Exception as e:
+        print(f"\n✗ Failed to run tests: {e}")
         return False
 
 
@@ -458,17 +477,36 @@ def main():
         sys.exit(1)
 
     # Step 7: Start Ollama
-    if not start_ollama():
+    ollama_started = start_ollama()
+    if not ollama_started:
         print("\n⚠ Ollama not running. You'll need to start it manually.")
 
     # Step 8: Pull models
-    if not pull_ollama_models():
+    models_pulled = pull_ollama_models()
+    if not models_pulled:
         print("\n⚠ Failed to pull models. You can pull them later with: ollama pull llama3.1:8b")
 
     # Step 9: Run tests
-    run_tests(venv_path)
+    tests_passed = run_tests(venv_path)
 
-    show_next_steps(venv_path)
+    # Check overall success
+    setup_success = ollama_started and models_pulled and tests_passed
+
+    if setup_success:
+        show_next_steps(venv_path)
+    else:
+        print("\n" + "=" * 60)
+        print("⚠ Setup completed with warnings")
+        print("=" * 60)
+        if not ollama_started:
+            print("  - Ollama not started automatically")
+        if not models_pulled:
+            print("  - Model not pulled")
+        if not tests_passed:
+            print("  - Some tests failed")
+        print("\nReview the output above and see SETUP.md for help.")
+        print("=" * 60)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

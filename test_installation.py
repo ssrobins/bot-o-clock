@@ -136,6 +136,7 @@ def test_memory():
     try:
         from memory import MemoryStore, Message
         from datetime import datetime
+        import os
         
         # Create test database
         db_path = "data/test_setup.db"
