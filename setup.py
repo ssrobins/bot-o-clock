@@ -41,16 +41,16 @@ def run_command(cmd, check=True, shell=False, cwd=None):
 def find_compatible_python():
     """Find a compatible Python version (3.10-3.12)"""
     print_step(1, "Finding Compatible Python Version")
-    
+
     # Try different Python versions
     python_commands = [
         "python3.12",
-        "python3.11", 
+        "python3.11",
         "python3.10",
         "python3",
         "python"
     ]
-    
+
     for cmd in python_commands:
         if shutil.which(cmd):
             # Check version
@@ -63,13 +63,13 @@ def find_compatible_python():
                 )
                 version = result.stdout.strip()
                 major, minor = map(int, version.split('.'))
-                
+
                 if major == 3 and 10 <= minor <= 12:
                     print(f"✓ Found compatible Python: {cmd} (version {version})")
                     return cmd, version
             except Exception:
                 continue
-    
+
     print("✗ No compatible Python version found")
     print("\nPython 3.10-3.12 is required (3.13+ not yet supported by TTS library)")
     print("\nTo install Python 3.12:")
@@ -81,10 +81,10 @@ def check_homebrew():
     """Check if Homebrew is installed (macOS)"""
     if platform.system() != "Darwin":
         return True  # Skip on non-macOS
-    
+
     print_step(2, "Checking Homebrew")
     success, _ = run_command(["brew", "--version"])
-    
+
     if success:
         print("✓ Homebrew is installed")
         return True
@@ -98,9 +98,9 @@ def check_homebrew():
 def create_virtual_environment(python_cmd):
     """Create a virtual environment with the compatible Python version"""
     print_step(3, "Creating Virtual Environment")
-    
+
     venv_path = "venv"
-    
+
     # Check if venv already exists
     if os.path.exists(venv_path):
         print(f"⚠ Virtual environment already exists at '{venv_path}'")
@@ -111,10 +111,10 @@ def create_virtual_environment(python_cmd):
         else:
             print("Using existing virtual environment")
             return True, venv_path
-    
+
     print(f"Creating virtual environment with {python_cmd}...")
     success, output = run_command([python_cmd, "-m", "venv", venv_path])
-    
+
     if success:
         print(f"✓ Virtual environment created at '{venv_path}'")
         return True, venv_path
@@ -130,12 +130,12 @@ def install_system_dependencies():
         print_step(4, "Skipping system dependencies (non-macOS)")
         print("Please install portaudio and ffmpeg manually for your system")
         return True
-    
+
     print_step(4, "Installing System Dependencies")
-    
+
     packages = ["portaudio", "ffmpeg"]
     all_success = True
-    
+
     for package in packages:
         print(f"\nInstalling {package}...")
         success, output = run_command(["brew", "install", package])
@@ -144,7 +144,7 @@ def install_system_dependencies():
         else:
             print(f"✗ Failed to install {package}")
             all_success = False
-    
+
     # Optional: BlackHole
     print("\nOptional: BlackHole for virtual audio routing")
     response = input("Install BlackHole? (y/n): ").lower().strip()
@@ -154,30 +154,30 @@ def install_system_dependencies():
             print("✓ BlackHole installed")
         else:
             print("⚠ BlackHole installation failed (optional)")
-    
+
     return all_success
 
 
 def install_python_dependencies(venv_path):
     """Install Python dependencies from requirements.txt"""
     print_step(5, "Installing Python Dependencies")
-    
+
     if not os.path.exists("requirements.txt"):
         print("✗ requirements.txt not found")
         return False
-    
+
     # Get the path to the venv pip
     if platform.system() == "Windows":
         pip_path = os.path.join(venv_path, "Scripts", "pip")
     else:
         pip_path = os.path.join(venv_path, "bin", "pip")
-    
+
     print("Upgrading pip...")
     run_command([pip_path, "install", "--upgrade", "pip"], check=False)
-    
+
     print("\nInstalling dependencies (this may take several minutes)...")
     success, output = run_command([pip_path, "install", "-r", "requirements.txt"])
-    
+
     if success:
         print("✓ Python dependencies installed")
         return True
@@ -196,11 +196,11 @@ def check_ollama_installed():
 def install_ollama():
     """Install Ollama"""
     print_step(6, "Installing Ollama")
-    
+
     if check_ollama_installed():
         print("✓ Ollama already installed")
         return True
-    
+
     if platform.system() == "Darwin":
         print("Installing Ollama via Homebrew...")
         success, _ = run_command(["brew", "install", "ollama"])
@@ -230,30 +230,30 @@ def check_ollama_running():
 def start_ollama():
     """Start Ollama service"""
     print_step(7, "Starting Ollama Service")
-    
+
     if check_ollama_running():
         print("✓ Ollama is already running")
         return True
-    
+
     print("Starting Ollama in the background...")
     print("(You may need to start it manually in another terminal with: ollama serve)")
-    
+
     # Try to start Ollama in background
     try:
         if platform.system() == "Darwin":
             # On macOS, try to start as a background service
-            subprocess.Popen(["ollama", "serve"], 
-                           stdout=subprocess.DEVNULL, 
+            subprocess.Popen(["ollama", "serve"],
+                           stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL)
             import time
             time.sleep(2)  # Give it time to start
-            
+
             if check_ollama_running():
                 print("✓ Ollama started")
                 return True
     except Exception:
         pass
-    
+
     print("⚠ Could not automatically start Ollama")
     print("Please run in another terminal: ollama serve")
     return False
@@ -262,14 +262,14 @@ def start_ollama():
 def pull_ollama_models():
     """Pull recommended Ollama models"""
     print_step(8, "Pulling Ollama Models")
-    
+
     if not check_ollama_running():
         print("⚠ Ollama is not running. Start it with: ollama serve")
         return False
-    
+
     print("\nRecommended model: llama3.1:8b")
     response = input("Pull llama3.1:8b? (y/n): ").lower().strip()
-    
+
     if response == 'y':
         print("\nPulling llama3.1:8b (this may take several minutes)...")
         success, _ = run_command(["ollama", "pull", "llama3.1:8b"])
@@ -278,10 +278,10 @@ def pull_ollama_models():
         else:
             print("✗ Failed to pull model")
             return False
-    
+
     print("\nOptional: llama3.1:70b (requires significant resources)")
     response = input("Pull llama3.1:70b? (y/n): ").lower().strip()
-    
+
     if response == 'y':
         print("\nPulling llama3.1:70b (this will take a while)...")
         success, _ = run_command(["ollama", "pull", "llama3.1:70b"])
@@ -289,32 +289,32 @@ def pull_ollama_models():
             print("✓ Model pulled successfully")
         else:
             print("⚠ Failed to pull model (optional)")
-    
+
     return True
 
 
 def run_tests(venv_path):
     """Run installation tests"""
     print_step(9, "Running Installation Tests")
-    
+
     if not os.path.exists("test_installation.py"):
         print("⚠ test_installation.py not found, skipping tests")
         return True
-    
+
     response = input("Run installation tests? (y/n): ").lower().strip()
     if response != 'y':
         print("Skipping tests")
         return True
-    
+
     # Get the path to the venv python
     if platform.system() == "Windows":
         python_path = os.path.join(venv_path, "Scripts", "python")
     else:
         python_path = os.path.join(venv_path, "bin", "python")
-    
+
     print("\nRunning tests...")
     success, output = run_command([python_path, "test_installation.py"])
-    
+
     if success:
         print("✓ Tests passed")
         print(output)
@@ -328,13 +328,13 @@ def run_tests(venv_path):
 def show_next_steps(venv_path):
     """Show next steps after setup"""
     print_header("Setup Complete!")
-    
+
     # Activation command
     if platform.system() == "Windows":
         activate_cmd = f"{venv_path}\\Scripts\\activate"
     else:
         activate_cmd = f"source {venv_path}/bin/activate"
-    
+
     print("IMPORTANT: Activate the virtual environment first:")
     print(f"   {activate_cmd}")
     print("\nThen you can:")
@@ -350,14 +350,28 @@ def show_next_steps(venv_path):
     print("   - QUICKSTART.md  (fast start)")
     print("   - SETUP.md       (detailed info)")
     print("   - README.md      (full guide)")
-    
+
     print("\n" + "=" * 60)
 
 
 def main():
     """Main setup routine"""
     print_header("🕒 bot-o'clock Setup")
-    
+
+    # Check if running on macOS
+    if platform.system() != "Darwin":
+        print("⚠️  This automated setup script is designed for macOS only.\n")
+        print(f"Detected platform: {platform.system()}")
+        print("\nFor Linux/Windows installation:")
+        print("  Please follow the manual setup instructions in SETUP.md")
+        print("  See: https://github.com/ssrobins/bot-o-clock/blob/main/SETUP.md")
+        print("\nThe manual setup includes platform-specific instructions for:")
+        print("  - Installing system dependencies (portaudio, ffmpeg)")
+        print("  - Setting up Python virtual environment")
+        print("  - Installing Ollama")
+        print("  - Installing Python packages")
+        sys.exit(0)
+
     print("This script will guide you through setting up bot-o'clock.\n")
     print("Steps:")
     print("  1. Find compatible Python (3.10-3.12)")
@@ -369,55 +383,55 @@ def main():
     print("  7. Start Ollama service")
     print("  8. Pull LLM models")
     print("  9. Run tests")
-    
+
     response = input("\nContinue? (y/n): ").lower().strip()
     if response != 'y':
         print("Setup cancelled.")
         return
-    
+
     # Step 1: Find compatible Python
     python_cmd, python_version = find_compatible_python()
     if not python_cmd:
         print("\n⚠ Setup incomplete. Please install a compatible Python version.")
         sys.exit(1)
-    
+
     # Step 2: Check Homebrew
     if not check_homebrew():
         print("\n⚠ Setup incomplete. Please install Homebrew first.")
         sys.exit(1)
-    
+
     # Step 3: Create virtual environment
     success, venv_path = create_virtual_environment(python_cmd)
     if not success:
         print("\n⚠ Setup incomplete. Failed to create virtual environment.")
         sys.exit(1)
-    
+
     # Step 4: Install system dependencies
     if not install_system_dependencies():
         print("\n⚠ Setup incomplete. Failed to install system dependencies.")
         sys.exit(1)
-    
+
     # Step 5: Install Python dependencies
     if not install_python_dependencies(venv_path):
         print("\n⚠ Setup incomplete. Failed to install Python dependencies.")
         sys.exit(1)
-    
+
     # Step 6: Install Ollama
     if not install_ollama():
         print("\n⚠ Setup incomplete. Failed to install Ollama.")
         sys.exit(1)
-    
+
     # Step 7: Start Ollama
     if not start_ollama():
         print("\n⚠ Ollama not running. You'll need to start it manually.")
-    
+
     # Step 8: Pull models
     if not pull_ollama_models():
         print("\n⚠ Failed to pull models. You can pull them later with: ollama pull llama3.1:8b")
-    
+
     # Step 9: Run tests
     run_tests(venv_path)
-    
+
     show_next_steps(venv_path)
 
 
