@@ -27,5 +27,5 @@ traits:
   - curious
   - helpful
 
-voice_sample: null
+voice_sample: "voices/steve_voice.wav"
 voice_language: "en"

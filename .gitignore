@@ -43,6 +43,8 @@ data/chroma/
 .DS_Store
 Thumbs.db
 
-# Audio files (optional - uncomment if you don't want to track voice samples)
-# voices/*.wav
-# voices/*.mp3
+# Voice samples (personal audio files)
+voices/*.wav
+voices/*.mp3
+voices/*.m4a
+!voices/README.md
