@@ -92,6 +92,11 @@ class AudioInput:
         # Copy data to avoid issues with buffer reuse
         audio_data = indata.copy()
         
+        # Flatten to 1D if multi-channel (sounddevice returns shape [frames, channels])
+        # Whisper expects 1D array
+        if audio_data.ndim > 1:
+            audio_data = audio_data.flatten()
+        
         # Apply VAD if enabled
         if self.vad:
             if self.vad.is_speech(audio_data):

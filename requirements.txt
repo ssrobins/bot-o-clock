@@ -18,6 +18,7 @@ ollama>=0.1.0
 
 # Text-to-Speech
 TTS>=0.21.0
+transformers<4.41.0  # TTS compatibility - BeamSearchScorer location changed in 4.41+
 
 # Memory/Storage
 chromadb>=0.4.0
