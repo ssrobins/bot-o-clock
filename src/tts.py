@@ -103,32 +103,9 @@ class CoquiTTS:
                     speed=self.config.speed
                 )
             else:
-                # Use default speaker for multi-speaker models
-                logger.debug("Synthesizing with default speaker")
-                # XTTS is multi-speaker, need to provide a speaker name
-                # Use first available speaker if model has speakers
-                try:
-                    if hasattr(self.tts, 'speakers') and self.tts.speakers:
-                        speaker = self.tts.speakers[0]
-                        logger.debug(f"Using speaker: {speaker}")
-                        self.tts.tts_to_file(
-                            text=text,
-                            speaker=speaker,
-                            language=lang,
-                            file_path=output_path,
-                            speed=self.config.speed
-                        )
-                    else:
-                        # Fallback for models without speakers
-                        self.tts.tts_to_file(
-                            text=text,
-                            language=lang,
-                            file_path=output_path,
-                            speed=self.config.speed
-                        )
-                except Exception as e:
-                    logger.error(f"Failed to synthesize with default speaker: {e}")
-                    raise
+                # XTTS requires voice cloning sample
+                logger.warning("No speaker_wav provided - XTTS requires voice sample for synthesis")
+                return None
             
             logger.info(f"Synthesized audio saved to: {output_path}")
             
@@ -349,14 +326,9 @@ class TTSManager:
         """
         profile = self.get_voice_profile(profile_name)
         if not profile:
-            # No voice profile, use default TTS voice
-            logger.debug(f"No voice profile for {profile_name}, using default voice")
-            return self.tts.synthesize(
-                text=text,
-                speaker_wav=None,  # Use default voice
-                output_path=output_path,
-                language=self.tts.config.language
-            )
+            # No voice profile - XTTS requires voice cloning sample
+            logger.debug(f"No voice profile for {profile_name}, TTS output disabled")
+            return None
         
         return self.tts.synthesize(
             text=text,
