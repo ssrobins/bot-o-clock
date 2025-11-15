@@ -151,7 +151,11 @@ Contributions welcome! Please open an issue or PR.
 
 ## Credits
 
-Built with:
-- [Whisper](https://github.com/openai/whisper)
-- [Ollama](https://ollama.ai)
-- [Coqui TTS](https://github.com/coqui-ai/TTS)
+**Orchestrator:** Steve Robinson
+- Initial design with ChatGPT
+- Implementation with GitHub Copilot and Claude Sonnet 3.5
+
+**Built with:**
+- [Whisper](https://github.com/openai/whisper) - Speech recognition
+- [Ollama](https://ollama.ai) - Local LLM runtime
+- [Coqui TTS](https://github.com/coqui-ai/TTS) - Text-to-speech synthesis
