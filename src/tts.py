@@ -331,8 +331,14 @@ class TTSManager:
         """
         profile = self.get_voice_profile(profile_name)
         if not profile:
-            logger.error(f"Voice profile not found: {profile_name}")
-            return None
+            # No voice profile, use default TTS voice
+            logger.debug(f"No voice profile for {profile_name}, using default voice")
+            return self.tts.synthesize(
+                text=text,
+                speaker_wav=None,  # Use default voice
+                output_path=output_path,
+                language=self.tts.config.language
+            )
         
         return self.tts.synthesize(
             text=text,
