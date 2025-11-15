@@ -54,6 +54,13 @@ See [SETUP.md](SETUP.md) for detailed manual installation steps for all platform
 
 ## Quick Start
 
+**Note:** After running `setup.py`, activate the virtual environment first:
+```bash
+source venv/bin/activate  # macOS/Linux
+# or: venv\Scripts\activate  # Windows
+```
+
+Then run:
 ```bash
 # Check your setup
 python start.py

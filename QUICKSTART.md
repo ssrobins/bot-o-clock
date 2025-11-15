@@ -5,10 +5,16 @@
 ### Automated Setup (macOS only)
 ```bash
 cd bot-oclock
-python setup.py
+python3 setup.py
+# This will create a venv and install everything automatically
+
+# After setup completes, activate the virtual environment
+source venv/bin/activate
+
+# Now you're ready to use bot-o'clock with 'python' commands
 ```
 
-The setup script will handle everything automatically.
+The setup script handles everything: creates venv, installs dependencies, sets up Ollama.
 
 **Linux/Windows users:** See manual setup below or check [SETUP.md](SETUP.md) for detailed platform-specific instructions.
 
@@ -27,11 +33,19 @@ ollama pull llama3.1:8b
 ### 2. Install Dependencies
 ```bash
 cd bot-oclock
+
+# Create and activate virtual environment (recommended)
+python3.12 -m venv venv  # or python3.11/python3.10
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
 ### 3. Run bot-o'clock!
 ```bash
+# Make sure venv is activated first: source venv/bin/activate
+
 # Interactive text mode (recommended for first run)
 python src/main.py run --mode text
 ```
